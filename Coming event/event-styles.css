@@ -9,7 +9,7 @@ body {
     height: 100vh;
     overflow: hidden;
     position: relative;
-    background-image: url('./pics/202605event.jpg');
+    background-image: url('./202605event.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
