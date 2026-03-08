@@ -1,0 +1,8 @@
+{
+    "name": "octobridge",
+    "private": true,
+    "scripts": {
+        "build": "node scripts/generate-ongoing-index.js",
+        "generate:ongoing": "node scripts/generate-ongoing-index.js"
+    }
+}
