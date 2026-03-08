@@ -4,19 +4,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OCTOBER 2026 Event - Octopus</title>
+    <title>October 2026 Event - Octopus</title>
     <link rel="stylesheet" href="../../../styles.css">
+    <style>
+        body {
+            overflow-y: auto;
+            overflow-x: hidden;
+            height: auto;
+            min-height: 100vh;
+        }
+
+        .container {
+            height: auto;
+            min-height: 100vh;
+            padding: 3rem 2rem;
+        }
+
+        .content {
+            position: relative;
+            width: 100%;
+        }
+
+        .markdown-content {
+            color: white;
+            text-align: left;
+            line-height: 1.7;
+            margin-top: 1.5rem;
+            max-width: 980px;
+            width: 100%;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .markdown-content h1 {
+            color: white;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .markdown-content h2 {
+            color: white;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .markdown-content h3,
+        .markdown-content p,
+        .markdown-content li {
+            color: white;
+            margin-bottom: 0.8rem;
+            font-weight: 300;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+        }
+
+        .markdown-content ul {
+            margin: 0 0 1rem 1.25rem;
+        }
+
+        .markdown-content a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .navigation-section {
+            position: relative;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .navigation-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            .markdown-content {
+                margin-top: 1rem;
+            }
+
+            .markdown-content h1 {
+                letter-spacing: 1px;
+            }
+
+            .markdown-content ul {
+                margin-left: 1rem;
+            }
+
+            .navigation-section {
+                margin-top: 1.5rem;
+            }
+
+            .navigation-links {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .markdown-content h1 {
+                letter-spacing: 0.5px;
+            }
+        }
+    </style>
 </head>
 
 <body style="background-image: url('./202610.jpg');">
     <div class="overlay"></div>
     <div class="container">
         <main class="content">
-            <h1 class="title">OCTOBER 2026</h1>
-            <div class="divider"></div>
-            <p class="message">Event details will be published soon.</p>
+            <section id="markdown-content" class="markdown-content">Loading event details...</section>
         </main>
     </div>
+
+    <script>
+        function renderInline(text) {
+            const escaped = text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            return escaped.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+        }
+
+        function markdownToHtml(markdown) {
+            const lines = markdown.split(/\r?\n/);
+            const html = [];
+            let inList = false;
+
+            for (const line of lines) {
+                const trimmed = line.trim();
+
+                if (!trimmed) {
+                    if (inList) {
+                        html.push('</ul>');
+                        inList = false;
+                    }
+                    continue;
+                }
+
+                if (trimmed.startsWith('# ')) {
+                    if (inList) {
+                        html.push('</ul>');
+                        inList = false;
+                    }
+                    html.push(`<h1>${renderInline(trimmed.slice(2))}</h1>`);
+                    continue;
+                }
+
+                if (trimmed.startsWith('## ')) {
+                    if (inList) {
+                        html.push('</ul>');
+                        inList = false;
+                    }
+                    html.push(`<h2>${renderInline(trimmed.slice(3))}</h2>`);
+                    continue;
+                }
+
+                if (trimmed.startsWith('- ')) {
+                    if (!inList) {
+                        html.push('<ul>');
+                        inList = true;
+                    }
+                    html.push(`<li>${renderInline(trimmed.slice(2))}</li>`);
+                    continue;
+                }
+
+                if (inList) {
+                    html.push('</ul>');
+                    inList = false;
+                }
+                html.push(`<p>${renderInline(trimmed)}</p>`);
+            }
+
+            if (inList) {
+                html.push('</ul>');
+            }
+
+            return html.join('');
+        }
+
+        fetch('./202610.md')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to load markdown content');
+                }
+                return response.text();
+            })
+            .then((markdown) => {
+                const container = document.getElementById('markdown-content');
+                container.innerHTML = markdownToHtml(markdown);
+            })
+            .catch(() => {
+                const container = document.getElementById('markdown-content');
+                container.textContent = 'Unable to load event details.';
+            });
+    </script>
 </body>
 
 </html>
