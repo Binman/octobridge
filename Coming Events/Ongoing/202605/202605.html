@@ -7,23 +7,59 @@
     <title>May 2026 Event - Octopus</title>
     <link rel="stylesheet" href="../../../styles.css">
     <style>
+        body {
+            overflow-y: auto;
+            overflow-x: hidden;
+            height: auto;
+            min-height: 100vh;
+        }
+
+        .container {
+            height: auto;
+            min-height: 100vh;
+            padding: 3rem 2rem;
+        }
+
+        .content {
+            position: relative;
+            width: 100%;
+        }
+
         .markdown-content {
             color: white;
             text-align: left;
             line-height: 1.7;
             margin-top: 1.5rem;
             max-width: 980px;
+            width: 100%;
             text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
         }
 
-        .markdown-content h1,
-        .markdown-content h2,
+        .markdown-content h1 {
+            color: white;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .markdown-content h2 {
+            color: white;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin: 1.5rem 0 0.8rem;
+        }
+
         .markdown-content h3,
         .markdown-content p,
         .markdown-content li {
             color: white;
             margin-bottom: 0.8rem;
             font-weight: 300;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
         }
 
         .markdown-content ul {
@@ -33,6 +69,57 @@
         .markdown-content a {
             color: white;
             text-decoration: underline;
+        }
+
+        .navigation-section {
+            position: relative;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .navigation-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            .markdown-content {
+                margin-top: 1rem;
+            }
+
+            .markdown-content h1 {
+                letter-spacing: 1px;
+            }
+
+            .markdown-content ul {
+                margin-left: 1rem;
+            }
+
+            .navigation-section {
+                margin-top: 1.5rem;
+            }
+
+            .navigation-links {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .markdown-content h1 {
+                letter-spacing: 0.5px;
+            }
         }
     </style>
 </head>
