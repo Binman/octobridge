@@ -6,38 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>May 2026 Event - Octopus</title>
     <link rel="stylesheet" href="../../../styles.css">
+    <style>
+        .markdown-content {
+            color: white;
+            text-align: left;
+            line-height: 1.7;
+            margin-top: 1.5rem;
+            max-width: 980px;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .markdown-content h1,
+        .markdown-content h2,
+        .markdown-content h3,
+        .markdown-content p,
+        .markdown-content li {
+            color: white;
+            margin-bottom: 0.8rem;
+            font-weight: 300;
+        }
+
+        .markdown-content ul {
+            margin: 0 0 1rem 1.25rem;
+        }
+
+        .markdown-content a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body style="background-image: url('./202605.jpg');">
     <div class="overlay"></div>
     <div class="container">
         <main class="content">
-            <h1 class="title">Customized Business Mission to Shanghai, May 2026</h1>
-            <div class="divider"></div>
-            <section>
-                <p>Designed for companies with clear objectives to explore opportunities in China, whether seeking
-                    distributors, suppliers, or strategic partners.</p>
-                <p>Contact us to tailor a business mission trip that aligns with your goals. Leveraging our strong
-                    network of established companies and local government partners in Shanghai, we are well positioned
-                    to support and accelerate your expansion plans in China.</p>
-
-                <h2>What We Offer</h2>
-                <ul>
-                    <li>Fully customized mission itinerary</li>
-                    <li>Direct access to vetted distributors, suppliers, and decision-makers</li>
-                    <li>Strong local government and industry connections</li>
-                </ul>
-
-                <h2>Cost Structure</h2>
-                <ul>
-                    <li>100% coverage of flights and accommodation</li>
-                    <li>Fees apply only after successful deal signings in China</li>
-                </ul>
-
-                <p>Seats confirmed (to date): <a href="https://www.1na.nl/" target="_blank" class="navigation-link">1NA
-                        Technologies B.V.</a> and <a href="https://www.biotactical.nl/" target="_blank"
-                        class="navigation-link">Biotactical B.V.</a></p>
-            </section>
+            <section id="markdown-content" class="markdown-content">Loading event details...</section>
 
             <div class="navigation-section">
                 <div class="navigation-links">
@@ -47,6 +51,90 @@
             </div>
         </main>
     </div>
+
+    <script>
+        function renderInline(text) {
+            const escaped = text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            return escaped.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+        }
+
+        function markdownToHtml(markdown) {
+            const lines = markdown.split(/\r?\n/);
+            const html = [];
+            let inList = false;
+
+            for (const line of lines) {
+                const trimmed = line.trim();
+
+                if (!trimmed) {
+                    if (inList) {
+                        html.push('</ul>');
+                        inList = false;
+                    }
+                    continue;
+                }
+
+                if (trimmed.startsWith('# ')) {
+                    if (inList) {
+                        html.push('</ul>');
+                        inList = false;
+                    }
+                    html.push(`<h1>${renderInline(trimmed.slice(2))}</h1>`);
+                    continue;
+                }
+
+                if (trimmed.startsWith('## ')) {
+                    if (inList) {
+                        html.push('</ul>');
+                        inList = false;
+                    }
+                    html.push(`<h2>${renderInline(trimmed.slice(3))}</h2>`);
+                    continue;
+                }
+
+                if (trimmed.startsWith('- ')) {
+                    if (!inList) {
+                        html.push('<ul>');
+                        inList = true;
+                    }
+                    html.push(`<li>${renderInline(trimmed.slice(2))}</li>`);
+                    continue;
+                }
+
+                if (inList) {
+                    html.push('</ul>');
+                    inList = false;
+                }
+                html.push(`<p>${renderInline(trimmed)}</p>`);
+            }
+
+            if (inList) {
+                html.push('</ul>');
+            }
+
+            return html.join('');
+        }
+
+        fetch('./202605.md')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to load markdown content');
+                }
+                return response.text();
+            })
+            .then((markdown) => {
+                const container = document.getElementById('markdown-content');
+                container.innerHTML = markdownToHtml(markdown);
+            })
+            .catch(() => {
+                const container = document.getElementById('markdown-content');
+                container.textContent = 'Unable to load event details.';
+            });
+    </script>
 </body>
 
 </html>
