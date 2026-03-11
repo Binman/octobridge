@@ -46,7 +46,7 @@ function ensurePlaceholderPage(folderName, folderDir) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OctoBridge</title>
+    <title>YFold</title>
     <link rel="icon" type="image/png" href="../../../index/logo.png">
     <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -123,7 +123,7 @@ function generateOngoingIndexHtml(eventItems) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OctoBridge</title>
+    <title>YFold</title>
     <link rel="icon" type="image/png" href="../../index/logo.png">
     <link rel="stylesheet" href="../../styles.css">
 </head>
