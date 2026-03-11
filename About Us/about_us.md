@@ -1,4 +1,4 @@
-# About OctoBridge
+# About YFold
 
 We are two scientists in **Life Science** with a clear purpose:  
 to create a bridge between **Life Science** communities in the Netherlands and China.
