@@ -1,12 +1,16 @@
 # About YFold
 
-two scientists in **Life Science** and one scientist in Design with a clear purpose:  
-to create a bridge between **Life Science** communities in the Netherlands and China.
+**YFold** was founded by two scientists in Life Sciences and one scientist in Design, united by a common vision:
 
-Science knows no borders — collaboration should not either.  
+to build **meaningful connections between Life Science communities in the Netherlands and China.**
+
+Science knows no borders — collaboration should not either.
+
+At YFold, we aim to **multiply collaboration, innovation, and impact.**
+
 **Let's prosper together.**
 
----
+---------------
 
 y.peng@yfold.nl
 h.qian@yfold.nl  
