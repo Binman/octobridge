@@ -67,6 +67,14 @@
             margin: 0 0 1rem 1.25rem;
         }
 
+        .markdown-content .section-divider {
+            width: min(100%, 48rem);
+            height: 1px;
+            margin: 0.7rem 0 1.1rem;
+            background: rgba(255, 255, 255, 0.72);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.18);
+        }
+
         .markdown-content a {
             color: white;
             text-decoration: underline;
@@ -211,6 +219,15 @@
                         inList = true;
                     }
                     html.push(`<li>${renderInline(trimmed.slice(2))}</li>`);
+                    continue;
+                }
+
+                if (/^-{3,}$/.test(trimmed)) {
+                    if (inList) {
+                        html.push('</ul>');
+                        inList = false;
+                    }
+                    html.push('<div class="section-divider" aria-hidden="true"></div>');
                     continue;
                 }
 
