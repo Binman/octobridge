@@ -1,6 +1,6 @@
 # About YFold
 
-**YFold** was founded by two scientists in Life Sciences and one scientist in Design, united by a common vision:
+**YFold** was founded by two scientists in Life Sciences and one scientist in Design and Decision System, united by a common vision:
 
 to build **meaningful connections between Life Science communities in the Netherlands and China.**
 
